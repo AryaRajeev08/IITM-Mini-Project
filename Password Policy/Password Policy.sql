@@ -1,5 +1,4 @@
---sudo -i -u postgres
---psql
+
 
 
 CREATE DATABASE test;
