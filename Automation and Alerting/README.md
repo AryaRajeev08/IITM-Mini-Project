@@ -148,11 +148,11 @@ The `email_sender.go` is a tool that collects PostgreSQL database statistics and
       receivers:
         - name: 'email-notifications'
           email_configs:
-            - to: 'your-email@example.com'
-              from: 'your-email@example.com'
+            - to: 'abc@example.com'
+              from: 'abc@example.com'
               smarthost: 'smtp.gmail.com:587'
-              auth_username: 'your-email@example.com'
-              auth_password: 'your-email-password'
+              auth_username: 'abc@example.com'
+              auth_password: 'passsword'
               send_resolved: true
       ```
 
@@ -163,7 +163,7 @@ The `email_sender.go` is a tool that collects PostgreSQL database statistics and
 In the original `main.go` file, the following lines of code were added (lines 81–106):
 
 ```go
-    db, err := sql.Open("postgres", "postgresql://postgres:2004@localhost:5432/test")
+    db, err := sql.Open("postgres", "postgresql://user:password@localhost:5432/dbname")
     if err != nil {
         log.Fatal(err)
     }
