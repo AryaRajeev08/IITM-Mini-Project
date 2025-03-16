@@ -10,20 +10,20 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// Email connection details
+// Email configuration 
 const (
 	SMTP_SERVER = "smtp.gmail.com"
 	SMTP_PORT   = "587"
-	SMTP_USER   = "abc@gmail.com" //sender email
-	SMTP_PASS   = "password"             // your password
+	SMTP_USER   = "abc@gmail.com" // sender email
+	SMTP_PASS   = "password"             // password
 	TO_EMAIL    = "abc@gmail.com"	//receiver email
 )
 
-// PostgreSQL connection details 
+// PostgreSQL connection details
 const (
-	DB_USER     = "user" //user
+	DB_USER     = "user" //postgres-user
 	DB_PASSWORD = "password" //password
-	DB_NAME     = "dbname"	//database name
+	DB_NAME     = "dbname" //database-name
 	DB_HOST     = "localhost"
 	DB_PORT     = "5432"
 )
