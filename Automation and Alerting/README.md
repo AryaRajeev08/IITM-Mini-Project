@@ -62,7 +62,8 @@ Once all services are up and running, you can view the alerts and metrics in the
 
 ![emailslowquery](https://github.com/user-attachments/assets/6b05bf0a-2fbd-47d2-ae7f-18fb5d8a2d13)
 
-![emailhighcpuusage](https://github.com/user-attachments/assets/34594765-f8a0-4846-9f35-e464ce71b00c)
+![emailhighcpuusage (2)](https://github.com/user-attachments/assets/2ec473d5-4b42-43fa-b76d-086567522555)
+
 
 
 ---
