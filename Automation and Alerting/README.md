@@ -50,6 +50,13 @@ The `health_collector.go` file collects and exposes key PostgreSQL performance m
     - **PostgreSQL Exporter**: Exposes PostgreSQL metrics.
 
 Once all services are up and running, you can view the alerts and metrics in the Prometheus UI. If the alert conditions are met, Alertmanager will send notifications (e.g., via email).
+![postgresexporter_metrics](https://github.com/user-attachments/assets/194d6a8d-06d6-41c6-9ca0-11673745d0d0)
+![prometheus](https://github.com/user-attachments/assets/2dd0f887-8a3a-4440-bc42-fc9f584eb54e)
+![slowquerydetected](https://github.com/user-attachments/assets/93dd32e3-acc7-4e72-bdea-c0e64219cc54)
+![alertmanagerdealswithslowquery](https://github.com/user-attachments/assets/4749db1d-8810-47e9-a99a-b2f38ff1c539)
+![emailslowquery](https://github.com/user-attachments/assets/6b05bf0a-2fbd-47d2-ae7f-18fb5d8a2d13)
+![emailhighcpuusage](https://github.com/user-attachments/assets/34594765-f8a0-4846-9f35-e464ce71b00c)
+
 
 ---
 
@@ -75,10 +82,8 @@ The `email_sender.go` is a tool that collects PostgreSQL database statistics and
     - The JSON report is sent via email using SMTP (configured with Gmail’s SMTP server).
     - The email is sent to a predefined recipient (`TO_EMAIL`).
 
+![dailyhealcheckreportemail](https://github.com/user-attachments/assets/83346fa9-e1d6-4bf8-90f5-61f495b35514)
 
-![daily health report via email](imgs/dailyhealcheckreportemail.png)
-
-![alertmanagerdealswithslowquery](https://github.com/user-attachments/assets/d95dca65-9578-4219-8e1d-a2f8bb5d4527)
 
 ### **How to Use `email_sender.go`:**
 
