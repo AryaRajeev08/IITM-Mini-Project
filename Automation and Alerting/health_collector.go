@@ -73,26 +73,30 @@ func (c *PostgresMetricsCollector) Collect(ch chan<- prometheus.Metric) {
 	c.CPUUsageMetric.Set(cpuUsage)
 	ch <- c.CPUUsageMetric
 
-	if cpuUsage > 70.0 { // Adjust threshold as needed
+	if cpuUsage > 70 { // Adjust threshold as needed
 		log.Printf("ALERT: PostgreSQL CPU usage is high! Current: %.2f%%", cpuUsage)
 	}
 
-	// --- Fetch Replication Lag ---
-	var replicationLag float64
+	// Fetch Replication Lag
+	var replicationLag sql.NullFloat64
 	err = c.DB.QueryRow(`
-		SELECT EXTRACT(EPOCH FROM now() - pg_last_xact_replay_timestamp()) AS lag_seconds;
-	`).Scan(&replicationLag)
+    SELECT EXTRACT(EPOCH FROM now() - pg_last_xact_replay_timestamp()) AS lag_seconds;
+`).Scan(&replicationLag)
 
 	if err != nil {
 		log.Printf("Error fetching replication lag: %v", err)
-		replicationLag = -1 // Set a negative value to indicate error
+		replicationLag = sql.NullFloat64{Valid: false} // Mark it as invalid to avoid using a null value
 	}
 
-	c.ReplicationLag.Set(replicationLag)
-	ch <- c.ReplicationLag
-
-	if replicationLag > 10 { // Adjust threshold as needed
-		log.Printf("ALERT: Replication lag is high! Current: %.2f seconds", replicationLag)
+	// If the result is not NULL, update the ReplicationLag metric
+	if replicationLag.Valid {
+		c.ReplicationLag.Set(replicationLag.Float64)
+		ch <- c.ReplicationLag
+		if replicationLag.Float64 > 10 { // Adjust threshold as needed
+			log.Printf("ALERT: Replication lag is high! Current: %.2f seconds", replicationLag.Float64)
+		}
+	} else {
+		log.Println("No replication lag data available (NULL value).")
 	}
 
 	// --- Fetch Slowest Query Execution Time ---
