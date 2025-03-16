@@ -1,4 +1,4 @@
-// I have added lines 81 to 106, the rest is the original main.go code of prometheus_exporter
+// I have added lines 81 to 106, the rest is the source code(main.go) of prostgres_exporter
 
 
 // Copyright 2021 The Prometheus Authors
