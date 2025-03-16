@@ -1,0 +1,26 @@
+groups:
+- name: postgres-health
+  rules:
+  - alert: HighCPUUsage
+    expr: pg_cpu_usage_percentage > 0.7
+    labels:
+      severity: critical
+    annotations:
+      summary: "High PostgreSQL CPU Usage"
+      description: "PostgreSQL CPU usage is above 7%"
+  - alert: HghReplicationLag
+    expr: pg_replication_lag_seconds > 5
+    labels:
+      severity: critical
+    annotations:
+      summary: "PostgreSQL Replication Lag High"
+      description: "Replication lag is above 5"
+  - alert: SlowQueriesDetected
+    expr: pg_slow_query_time_seconds > 3
+    labels:
+      severity: critical
+    annotations:
+       summary: "Slow Queries Detected in PostgreSQL"
+       description: "Some queries took longer than 3 seconds to execute"
+
+
