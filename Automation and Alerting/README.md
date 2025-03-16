@@ -2,7 +2,7 @@
 
 ## **Overview**
 
-This project is designed to monitor PostgreSQL performance metrics and send health reports. The monitoring system collects key PostgreSQL metrics, exposes them to Prometheus for scraping, and sends health status updates through email using a cron job. 
+This project is designed to monitor PostgreSQL performance metrics and send health reports. The monitoring system collects key PostgreSQL metrics, exposes them to Prometheus for scraping, and sends health status updates through email using a cron job.
 
 ### **Key Components**
 
@@ -51,7 +51,6 @@ The `health_collector.go` file collects and exposes key PostgreSQL performance m
 
 Once all services are up and running, you can view the alerts and metrics in the Prometheus UI. If the alert conditions are met, Alertmanager will send notifications (e.g., via email).
 
-
 ![postgresexporter_metrics](https://github.com/user-attachments/assets/194d6a8d-06d6-41c6-9ca0-11673745d0d0)
 
 ![Prometheus UI](https://github.com/user-attachments/assets/18241dbe-42dd-4528-a060-0b7e56434431)
@@ -63,8 +62,6 @@ Once all services are up and running, you can view the alerts and metrics in the
 ![emailslowquery](https://github.com/user-attachments/assets/6b05bf0a-2fbd-47d2-ae7f-18fb5d8a2d13)
 
 ![emailhighcpuusage (2)](https://github.com/user-attachments/assets/2ec473d5-4b42-43fa-b76d-086567522555)
-
-
 
 ---
 
@@ -90,9 +87,7 @@ The `email_sender.go` is a tool that collects PostgreSQL database statistics and
     - The JSON report is sent via email using SMTP (configured with Gmail’s SMTP server).
     - The email is sent to a predefined recipient (`TO_EMAIL`).
 
-
 ![dailyhealcheckreportemail](https://github.com/user-attachments/assets/83346fa9-e1d6-4bf8-90f5-61f495b35514)
-
 
 ### **How to Use `email_sender.go`:**
 
@@ -163,10 +158,30 @@ The `email_sender.go` is a tool that collects PostgreSQL database statistics and
 
 ---
 
-## **Conclusion**
+## **Main.go Updates:**
 
-By using `health_collector.go` and `email_sender.go`, you can monitor the performance of your PostgreSQL databases and automatically receive health reports via email. This system integrates PostgreSQL performance metrics with Prometheus and sends alerts based on predefined conditions, ensuring your database is always performing optimally.
+In the original `main.go` file, the following lines of code were added (lines 81–106):
 
----
+```go
+    db, err := sql.Open("postgres", "postgresql://postgres:2004@localhost:5432/test")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close()
 
-If you need further assistance or customization, feel free to contribute or open an issue in the repository.
+    // Ensure the DB connection is actually working
+    err = db.Ping()
+    if err != nil {
+        log.Fatal("Database connection failed:", err)
+    }
+    fmt.Println("Connected successfully to the database.")
+
+    cpuCollector := collector.NewPostgresMetricsCollector(db)
+
+    // Register the full collector (not the individual metric)
+    prometheus.MustRegister(cpuCollector)
+
+    // Start the Prometheus HTTP handler
+    http.Handle("/metrics", promhttp.Handler())
+    log.Println("Starting Prometheus exporter on :9187")
+    log.Fatal(http.ListenAndServe(":9187", nil))
