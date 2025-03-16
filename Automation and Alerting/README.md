@@ -75,6 +75,9 @@ The `email_sender.go` is a tool that collects PostgreSQL database statistics and
     - The JSON report is sent via email using SMTP (configured with Gmail’s SMTP server).
     - The email is sent to a predefined recipient (`TO_EMAIL`).
 
+
+![daily health report via email](imgs/dailyhealcheckreportemail.png)
+
 ### **How to Use `email_sender.go`:**
 
 1. **Compilation:**
