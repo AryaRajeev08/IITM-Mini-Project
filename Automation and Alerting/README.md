@@ -54,7 +54,7 @@ Once all services are up and running, you can view the alerts and metrics in the
 
 ![postgresexporter_metrics](https://github.com/user-attachments/assets/194d6a8d-06d6-41c6-9ca0-11673745d0d0)
 
-![prometheus](https://github.com/user-attachments/assets/2dd0f887-8a3a-4440-bc42-fc9f584eb54e)
+![Prometheus UI](https://github.com/user-attachments/assets/18241dbe-42dd-4528-a060-0b7e56434431)
 
 ![slowquerydetected](https://github.com/user-attachments/assets/93dd32e3-acc7-4e72-bdea-c0e64219cc54)
 
