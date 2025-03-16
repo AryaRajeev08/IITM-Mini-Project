@@ -1,7 +1,7 @@
 global:
   smtp_smarthost: 'smtp.gmail.com:587'
-  smtp_from: 'email@gmail.com'
-  smtp_auth_username: 'email@gmail.com'
+  smtp_from: 'abc@gmail.com'
+  smtp_auth_username: 'abc@gmail.com'
   smtp_auth_password: 'password'
 
 route:
@@ -14,10 +14,10 @@ route:
 receivers:
   - name: 'email-alert'
     email_configs:
-      - to: 'email@gmail.com'
-        from: 'email@gmail.com'
+      - to: 'abc@gmail.com'
+        from: 'abc@gmail.com'
         smarthost: 'smtp.gmail.com:587'
-        auth_username: 'aemail@gmail.com'
+        auth_username: 'abc@gmail.com'
         auth_password: 'password'
         require_tls: true
 
