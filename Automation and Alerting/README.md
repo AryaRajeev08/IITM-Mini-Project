@@ -1,5 +1,4 @@
 **************************************************************** HEALTH-COLLECTOR  *************************************************************
-------------------------------------------------------------------------------------------------------------------------------------------------
 
 The health_collector.go collects and exposes PostgreSQL performance metrics to Prometheus for monitoring. Here's a simplified breakdown:
 Key Metrics Collected:
@@ -30,7 +29,7 @@ Once everything is set, run prometheus, alertmanager and postgres_exporter and a
 alert conditions are met, the alertmanager will alert the user through an email.
 
 ****************************************************************** EMAIL_SENDER ****************************************************************
-------------------------------------------------------------------------------------------------------------------------------------------------
+
 The email_sender.go is designed to collect statistics from a PostgreSQL database and send the health status in the form of an email. 
 It includes the following key functionalities:
 
