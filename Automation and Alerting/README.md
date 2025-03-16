@@ -50,7 +50,7 @@ The email is sent to a predefined recipient email address (TO_EMAIL).
 
 *** **How to use email_sender.go** ***
 
-Add this to your dezired directory and compile it using :  go build -o email_sender.go
+Add this to your desired directory and compile it using :  go build -o email_sender.go
 To send an automated daily report, you can use a cron job : Edit the cron configuration file to schedule the program using crontab -e
 Add "minute hour day_of_month month day_of_week" command in the crontab
 This will automatically send health reports to the user.
