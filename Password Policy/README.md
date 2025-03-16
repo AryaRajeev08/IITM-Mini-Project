@@ -23,7 +23,6 @@ To set up this system, follow the steps below:
 1. Install PostgreSQL with `pgcrypto` and `pg_cron` extensions.
 2. Create the necessary roles, databases, and tables using the provided SQL scripts.
 3. Configure the cron job for automated password expiry checks.
-4. Set up email reminders using your preferred SMTP server.
 
 ## SQL Script Overview
 
