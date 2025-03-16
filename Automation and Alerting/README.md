@@ -21,14 +21,15 @@ CPU usage exceeds 70%.
 Replication lag exceeds 10 seconds.
 Slow query execution time exceeds 3 seconds.
 
-////How to use it \\\\
+*** **How to use health_collector.go** ***
+
 Add this file to the collector directory in the postgres_exporter source code.
 Also update the prometheus.yml, alert_rules.yml and alertmanager.yml file.
 
 Once everything is set, run prometheus, alertmanager and postgres_exporter and all the alert rules will be shown in the prometheus ui and if the 
 alert conditions are met, the alertmanager will alert the user through an email.
 
-*** ***EMAIL_SENDER** ***
+*** **How to use email_sender.go** ***
 
 The email_sender.go is designed to collect statistics from a PostgreSQL database and send the health status in the form of an email. 
 It includes the following key functionalities:
@@ -48,6 +49,7 @@ This JSON report is sent as the body of an email using SMTP (with Gmail's SMTP s
 The email is sent to a predefined recipient email address (TO_EMAIL).
 
 ////How to use it\\\\
+
 Add this to your dezired directory and compile it using :  go build -o email_sender.go
 To send an automated daily report, you can use a cron job : Edit the cron configuration file to schedule the program using crontab -e
 Add "minute hour day_of_month month day_of_week" command in the crontab
