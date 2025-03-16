@@ -1,5 +1,6 @@
-**************************************************************** HEALTH-COLLECTOR ****************************************************************
---------------------------------------------------------------------------------------------------------------------------------------------------
+**************************************************************** HEALTH-COLLECTOR  *************************************************************
+------------------------------------------------------------------------------------------------------------------------------------------------
+
 The health_collector.go collects and exposes PostgreSQL performance metrics to Prometheus for monitoring. Here's a simplified breakdown:
 Key Metrics Collected:
 CPU Usage of the PostgreSQL process.
@@ -28,8 +29,8 @@ Also update the prometheus.yml, alert_rules.yml and alertmanager.yml file.
 Once everything is set, run prometheus, alertmanager and postgres_exporter and all the alert rules will be shown in the prometheus ui and if the 
 alert conditions are met, the alertmanager will alert the user through an email.
 
-****************************************************************** EMAIL_SENDER ******************************************************************
---------------------------------------------------------------------------------------------------------------------------------------------------
+****************************************************************** EMAIL_SENDER ****************************************************************
+------------------------------------------------------------------------------------------------------------------------------------------------
 The email_sender.go is designed to collect statistics from a PostgreSQL database and send the health status in the form of an email. 
 It includes the following key functionalities:
 
@@ -47,7 +48,7 @@ The collected metrics are then formatted into a JSON report.
 This JSON report is sent as the body of an email using SMTP (with Gmail's SMTP server in this case).
 The email is sent to a predefined recipient email address (TO_EMAIL).
 
-////How to use it\\\
+////How to use it\\\\
 Add this to your dezired directory and compile it using :  go build -o email_sender.go
 To send an automated daily report, you can use a cron job : Edit the cron configuration file to schedule the program using crontab -e
 Add "minute hour day_of_month month day_of_week" command in the crontab
