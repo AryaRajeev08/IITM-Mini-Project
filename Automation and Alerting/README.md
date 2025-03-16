@@ -168,8 +168,4 @@ By using `health_collector.go` and `email_sender.go`, you can monitor the perfor
 
 ---
 
-**Note:** Make sure you have the required PostgreSQL extensions (`pg_stat_statements`, `pg_cron`, `pgcrypto`) installed and properly configured before running these scripts.
-
----
-
 If you need further assistance or customization, feel free to contribute or open an issue in the repository.
