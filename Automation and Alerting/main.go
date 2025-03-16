@@ -80,7 +80,7 @@ func main() {
 
   ///////////////////////////////////////////////////////////////////
   //Extra added code that is not in the postgres_exporter source code
-	db, err := sql.Open("postgres", "postgresql://postgres:2004@localhost:5432/test")
+	db, err := sql.Open("postgres", "postgresql://user:password@localhost:5432/dbname")
 	if err != nil {
 		log.Fatal(err)
 	}
