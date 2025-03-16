@@ -2,12 +2,12 @@ groups:
 - name: postgres-health
   rules:
   - alert: HighCPUUsage
-    expr: pg_cpu_usage_percentage > 0.7
+    expr: pg_cpu_usage_percentage > 70
     labels:
       severity: critical
     annotations:
       summary: "High PostgreSQL CPU Usage"
-      description: "PostgreSQL CPU usage is above 7%"
+      description: "PostgreSQL CPU usage is above 70%"
   - alert: HghReplicationLag
     expr: pg_replication_lag_seconds > 5
     labels:
