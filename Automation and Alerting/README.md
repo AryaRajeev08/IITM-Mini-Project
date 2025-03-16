@@ -1,58 +1,157 @@
- *** **HEALTH_COLLECTOR** ***
+# **PostgreSQL Monitoring with Prometheus - Health Collector and Email Sender**
 
-The health_collector.go collects and exposes PostgreSQL performance metrics to Prometheus for monitoring. Here's a simplified breakdown:
-Key Metrics Collected:
-CPU Usage of the PostgreSQL process.
-Replication Lag: How much delay there is between the primary and standby database.
-Slow Query Time: Time taken by the slowest query in PostgreSQL.
-What It Does:
-Collects Metrics:
+## **Overview**
 
-Gets CPU usage via a shell command.
-Queries the PostgreSQL database for replication lag.
-Gets the slowest query time from the database.
-Exposes Metrics to Prometheus:
+This project is designed to monitor PostgreSQL performance metrics and send health reports. The monitoring system collects key PostgreSQL metrics, exposes them to Prometheus for scraping, and sends health status updates through email using a cron job. 
 
-These metrics are formatted for Prometheus to scrape (fetch and store) for monitoring.
-Alerts:
+### **Key Components**
 
-Logs alerts if:
-CPU usage exceeds 70%.
-Replication lag exceeds 10 seconds.
-Slow query execution time exceeds 3 seconds.
+1. **health_collector.go**
+2. **email_sender.go**
 
-*** **How to use health_collector.go** ***
+---
 
-Add this file to the collector directory in the postgres_exporter source code.
-Also update the prometheus.yml, alert_rules.yml and alertmanager.yml file.
+## **Health Collector (health_collector.go)**
 
-Once everything is set, run prometheus, alertmanager and postgres_exporter and all the alert rules will be shown in the prometheus ui and if the 
-alert conditions are met, the alertmanager will alert the user through an email.
+The `health_collector.go` file collects and exposes key PostgreSQL performance metrics to Prometheus for continuous monitoring.
 
-*** **EMAIL_SENDER** ***
+### **Key Metrics Collected:**
 
-The email_sender.go is designed to collect statistics from a PostgreSQL database and send the health status in the form of an email. 
-It includes the following key functionalities:
+- **CPU Usage:** Monitors the CPU usage of the PostgreSQL process.
+- **Replication Lag:** Monitors the delay between the primary and standby databases.
+- **Slow Query Time:** Monitors the execution time of the slowest query in PostgreSQL.
 
-1. Collecting PostgreSQL Metrics
-Database Sizes: It queries PostgreSQL to get the sizes of all databases.
-Table Sizes: It queries PostgreSQL to get the sizes of all tables in the database.
-Query Statistics: It fetches the top 5 queries based on execution time using the pg_stat_statements extension, including total execution time and the number of calls.
-2. Health Report
-The metrics are organized into a HealthCheck struct, which includes:
-Database Sizes: A list of database sizes.
-Table Sizes: A list of table sizes.
-Query Stats: A list of the top 5 slow queries with their execution times and call counts.
-3. Sending an Email
-The collected metrics are then formatted into a JSON report.
-This JSON report is sent as the body of an email using SMTP (with Gmail's SMTP server in this case).
-The email is sent to a predefined recipient email address (TO_EMAIL).
+### **What It Does:**
 
-*** **How to use email_sender.go** ***
+- **Collects Metrics:**
+    - Gets CPU usage via a shell command.
+    - Queries the PostgreSQL database to get replication lag.
+    - Retrieves the slowest query execution time.
+  
+- **Exposes Metrics to Prometheus:**
+    - Formats the collected metrics for Prometheus to scrape and store.
+  
+- **Alerts:**
+    - **CPU Usage Alert:** Triggered if CPU usage exceeds 70%.
+    - **Replication Lag Alert:** Triggered if replication lag exceeds 10 seconds.
+    - **Slow Query Alert:** Triggered if slow query execution time exceeds 3 seconds.
 
-Add this to your desired directory and compile it using :  go build -o email_sender.go
-To send an automated daily report, you can use a cron job : Edit the cron configuration file to schedule the program using crontab -e
-Add "minute hour day_of_month month day_of_week" command in the crontab
-This will automatically send health reports to the user.
+### **How to Use `health_collector.go`:**
 
+1. Add this file to the collector directory in the `postgres_exporter` source code.
+2. Update the following configuration files:
+    - `prometheus.yml`
+    - `alert_rules.yml`
+    - `alertmanager.yml`
+   
+3. **Run the following services:**
+    - **Prometheus**: Scrapes the metrics.
+    - **Alertmanager**: Sends alerts when conditions are met.
+    - **PostgreSQL Exporter**: Exposes PostgreSQL metrics.
 
+Once all services are up and running, you can view the alerts and metrics in the Prometheus UI. If the alert conditions are met, Alertmanager will send notifications (e.g., via email).
+
+---
+
+## **Email Sender (email_sender.go)**
+
+The `email_sender.go` is a tool that collects PostgreSQL database statistics and sends an email with the health status report.
+
+### **Key Functionalities:**
+
+1. **Collects PostgreSQL Metrics:**
+    - **Database Sizes:** Queries PostgreSQL to retrieve the sizes of all databases.
+    - **Table Sizes:** Queries PostgreSQL to retrieve the sizes of all tables.
+    - **Query Statistics:** Fetches the top 5 slowest queries using the `pg_stat_statements` extension, including execution time and the number of calls.
+
+2. **Health Report:**
+    - The collected metrics are organized into a `HealthCheck` struct with:
+        - **Database Sizes**
+        - **Table Sizes**
+        - **Query Stats (slow queries)**
+
+3. **Email Functionality:**
+    - The metrics are formatted into a JSON report.
+    - The JSON report is sent via email using SMTP (configured with Gmail’s SMTP server).
+    - The email is sent to a predefined recipient (`TO_EMAIL`).
+
+### **How to Use `email_sender.go`:**
+
+1. **Compilation:**
+    - Add the `email_sender.go` file to your desired directory.
+    - Compile the program using:
+      ```bash
+      go build -o email_sender.go
+      ```
+
+2. **Automated Daily Reports Using Cron:**
+    - Schedule the email report to be sent daily by editing the cron configuration:
+      ```bash
+      crontab -e
+      ```
+    - Add the following cron job to send an email every day at 8 AM:
+      ```bash
+      0 8 * * * /path/to/email_sender
+      ```
+    - This will run the `email_sender` program every day at the specified time.
+
+---
+
+## **Configuration Files:**
+
+1. **`prometheus.yml`:**
+    - Add the `postgres_exporter` job in the `scrape_configs` section.
+    - Example:
+      ```yaml
+      scrape_configs:
+        - job_name: 'postgres'
+          static_configs:
+            - targets: ['localhost:9187']
+      ```
+
+2. **`alert_rules.yml`:**
+    - Add custom alerting rules based on CPU usage, replication lag, or slow queries.
+    - Example:
+      ```yaml
+      groups:
+        - name: PostgreSQL Alerts
+          rules:
+            - alert: HighCPUUsage
+              expr: postgres_cpu_usage > 70
+              for: 1m
+            - alert: ReplicationLag
+              expr: postgres_replication_lag > 10
+              for: 1m
+            - alert: SlowQuery
+              expr: postgres_slowest_query_time > 3
+              for: 1m
+      ```
+
+3. **`alertmanager.yml`:**
+    - Configure Alertmanager to send email notifications based on the alerts defined in `alert_rules.yml`.
+    - Example:
+      ```yaml
+      receivers:
+        - name: 'email-notifications'
+          email_configs:
+            - to: 'your-email@example.com'
+              from: 'your-email@example.com'
+              smarthost: 'smtp.gmail.com:587'
+              auth_username: 'your-email@example.com'
+              auth_password: 'your-email-password'
+              send_resolved: true
+      ```
+
+---
+
+## **Conclusion**
+
+By using `health_collector.go` and `email_sender.go`, you can monitor the performance of your PostgreSQL databases and automatically receive health reports via email. This system integrates PostgreSQL performance metrics with Prometheus and sends alerts based on predefined conditions, ensuring your database is always performing optimally.
+
+---
+
+**Note:** Make sure you have the required PostgreSQL extensions (`pg_stat_statements`, `pg_cron`, `pgcrypto`) installed and properly configured before running these scripts.
+
+---
+
+If you need further assistance or customization, feel free to contribute or open an issue in the repository.
