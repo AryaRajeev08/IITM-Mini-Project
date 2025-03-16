@@ -78,6 +78,8 @@ The `email_sender.go` is a tool that collects PostgreSQL database statistics and
 
 ![daily health report via email](imgs/dailyhealcheckreportemail.png)
 
+![alertmanagerdealswithslowquery](https://github.com/user-attachments/assets/d95dca65-9578-4219-8e1d-a2f8bb5d4527)
+
 ### **How to Use `email_sender.go`:**
 
 1. **Compilation:**
