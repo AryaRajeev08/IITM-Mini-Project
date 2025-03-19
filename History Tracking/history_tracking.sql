@@ -45,7 +45,7 @@ $$ LANGUAGE plpgsql;
 
 --apply trigger to a table
 CREATE TRIGGER track_changes
-AFTER INSERT OR UPDATE OR DELETE ON your_table_name
+AFTER INSERT OR UPDATE OR DELETE ON my_table
 FOR EACH ROW EXECUTE FUNCTION log_changes();
 
 

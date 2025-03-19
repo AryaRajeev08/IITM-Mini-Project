@@ -1,0 +1,22 @@
+pg_exporter:
+  queries:
+    - name: audit_log
+      query: "SELECT username, operation, table_name, change_time FROM audit_log ORDER BY change_time DESC LIMIT 100"
+      metrics:
+        - username:
+            usage: "LABEL"
+            description: "Name of the user who performed the operation"
+        - operation:
+            usage: "LABEL"
+            description: "Type of database operation"
+        - table_name:
+            usage: "LABEL"
+            description: "Table affected"
+        - change_time:
+            usage: "GAUGE"
+            description: "Timestamp of the operation"
+
+
+databases:
+  - name: "postgres"
+    connection: "postgresql://prometheus:password@localhost:5432/postgres?sslmode=disable"
