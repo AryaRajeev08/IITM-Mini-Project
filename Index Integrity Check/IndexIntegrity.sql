@@ -39,7 +39,19 @@ BEGIN
 
                 -- Log corruption
                 INSERT INTO corruption_logs (index_name, table_name, detected_at)
-$$ LANGUAGE plpgsql; 'No index corruption found.'; rec.index_name);
+                VALUES (rec.index_name, rec.table_name, now());
+
+                -- Fix corruption by reindexing
+                EXECUTE format('REINDEX INDEX %I', rec.index_name);
+        END;
+    END LOOP;
+    
+    IF NOT corruption_found THEN
+        RAISE NOTICE 'No index corruption found.';
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
 
 
 --Step 5: View the corrupted indexes if any
