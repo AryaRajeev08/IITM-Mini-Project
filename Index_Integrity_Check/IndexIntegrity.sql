@@ -1,19 +1,15 @@
 --Step 1: Create Database
 
-index_checker=# CREATE DATABASE index_checker;
-CREATE DATABASE
+CREATE DATABASE index_checker;
 
 --Step 2: Create required extensions
 
-index_checker=# CREATE EXTENSION amcheck;
-CREATE EXTENSION
-index_checker=# CREATE EXTENSION pg_cron;
-CREATE EXTENSION
-
+CREATE EXTENSION amcheck;
+CREATE EXTENSION pg_cron;
 
 --Step 3: Create a corruption log table
  
-index_checker=# CREATE TABLE corruption_logs (
+CREATE TABLE corruption_logs (
     id SERIAL PRIMARY KEY,
     index_name TEXT NOT NULL,
     table_name TEXT NOT NULL,
@@ -23,7 +19,7 @@ index_checker=# CREATE TABLE corruption_logs (
 
 --Step 4: Create a function to check and fix the indexes
 
-index_checker=# CREATE OR REPLACE FUNCTION check_index_integrity()
+CREATE OR REPLACE FUNCTION check_index_integrity()
 RETURNS void AS $$
 DECLARE
     rec RECORD;
@@ -44,17 +40,16 @@ BEGIN
                 -- Log corruption
                 INSERT INTO corruption_logs (index_name, table_name, detected_at)
 $$ LANGUAGE plpgsql; 'No index corruption found.'; rec.index_name);
-CREATE FUNCTION
 
 
 --Step 5: View the corrupted indexes if any
 
-index_checker=# SELECT * FROM corruption_logs ORDER BY detected_at DESC;
+SELECT * FROM corruption_logs ORDER BY detected_at DESC;
 
 
 --Step 6: Schedule Automatic check
 
-index_checker=# SELECT cron.schedule(
+SELECT cron.schedule(
     'index_check_job',
     '0 0 * * *', -- Runs daily at midnight
     $$CALL check_index_integrity()$$
@@ -62,6 +57,6 @@ index_checker=# SELECT cron.schedule(
 
 
 --Step 7: View the scheduled job
-index_checker=# SELECT * FROM cron.job;
+SELECT * FROM cron.job;
 
 
