@@ -1,12 +1,12 @@
--- Step 1: Create Database and User
+-- Create Database and User
 CREATE DATABASE test;
 CREATE USER ad_user WITH ENCRYPTED PASSWORD '123';
 GRANT ALL PRIVILEGES ON DATABASE test TO ad_user;
 
--- Step 2: Enable pgcrypto for password hashing (keeping this in case needed)
+-- Enable pgcrypto for password hashing (keeping this in case needed)
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
--- Step 3: Create Users Table
+-- Create Users Table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE users (
     account_locked BOOLEAN DEFAULT FALSE
 );
 
--- Step 4: Password Policy Function
+-- Password Policy Function
 CREATE OR REPLACE FUNCTION enforce_password_policy()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -47,14 +47,14 @@ BEFORE INSERT OR UPDATE ON users
 FOR EACH ROW
 EXECUTE FUNCTION enforce_password_policy();
 
--- Step 5: Create Password History Table
+-- Create Password History Table
 CREATE TABLE password_history (
     user_id INT REFERENCES users(id) ON DELETE CASCADE,
     old_password TEXT NOT NULL,
     changed_at TIMESTAMP DEFAULT now()
 );
 
--- Step 6: Enforce Password Expiry and History
+-- Enforce Password Expiry and History
 CREATE OR REPLACE FUNCTION check_password_expiry()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -95,7 +95,7 @@ BEFORE UPDATE ON users
 FOR EACH ROW
 EXECUTE FUNCTION check_password_expiry();
 
--- Step 7: Automate Password Expiry
+-- Automate Password Expiry
 CREATE EXTENSION IF NOT EXISTS pg_cron;
 
 CREATE OR REPLACE FUNCTION expire_old_passwords() RETURNS VOID AS $$
@@ -110,11 +110,6 @@ $$ LANGUAGE plpgsql;
 
 SELECT cron.schedule('0 0 * * *', 'SELECT expire_old_passwords();');
 
--- Step 8: Get Users Close to Password Expiry
+-- Get Users Close to Password Expiry
 SELECT email FROM users WHERE password_expiry - INTERVAL '5 days' < now();
-
--- Step 9: Insert Users with Plain Text Passwords
-INSERT INTO users (username, password)
-VALUES ('testuser', 'StrongPass123!');
-
 
