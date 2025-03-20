@@ -46,7 +46,3 @@ The SQL script includes the `check_index_integrity()` function, which:
 - Use **scheduled jobs** to execute the script periodically.
 - Refer to **Job_scheduled.png** and **Preview_jobschedule.png** for guidance on setting up automation.
 
-## Contact
-
-For any issues or improvements, please open an issue in the GitHub repository.
-
