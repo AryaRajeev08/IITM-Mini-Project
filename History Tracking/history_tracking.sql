@@ -107,3 +107,30 @@ REINDEX INDEX index_name;  -- replace index_name with the your index names
 
 -- Clean up dead tuples.
 VACUUM ANALYZE;
+
+
+-- Index bloat in grafana
+WITH index_info AS (
+  SELECT
+    psui.schemaname,
+    psui.relname AS tablename,
+    psui.indexrelname AS indexname,
+    pg_relation_size(psui.indexrelid) AS index_size,
+    psui.idx_scan AS index_scans,
+    pg_size_pretty(pg_relation_size(psui.indexrelid)) AS index_size_pretty
+  FROM
+    pg_stat_user_indexes psui
+  JOIN
+    pg_indexes pi ON psui.indexrelname = pi.indexname
+)
+SELECT
+  schemaname,
+  tablename,
+  indexname,
+  index_size,
+  index_scans,
+  index_size_pretty
+FROM
+  index_info
+ORDER BY
+  index_size DESC;
