@@ -7,7 +7,7 @@ This folder contains SQL scripts and supporting files related to **index integri
 ## Files in This Folder
 
 - **IndexIntegrity.sql** - SQL script to check for index corruption and integrity issues.
-- **Corruptio.png** - Image showing an example of a corrupted index.
+- **Corruption.png** - Image showing an example of a corrupted index.
 - **Corruption_rectified.png** - Image showing fixed index.
 - **Index_table.png** - Image showing the indexname and tablename.
 - **Job_scheduled.png** - Screenshot of a scheduled job for automated integrity checks.
