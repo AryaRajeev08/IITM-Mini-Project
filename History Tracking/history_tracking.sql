@@ -49,3 +49,61 @@ AFTER INSERT OR UPDATE OR DELETE ON my_table
 FOR EACH ROW EXECUTE FUNCTION log_changes();
 
 
+-- INDEX BLOAT
+
+-- Install pgstattuple
+CREATE EXTENSION IF NOT EXISTS pgstattuple;
+
+-- Verify installation
+SELECT * FROM pg_extension WHERE extname = 'pgstattuple';
+
+
+-- Detect Index Bloat
+SELECT
+  stat.indexrelid::regclass AS index_name,
+  pg_size_pretty(pg_relation_size(stat.indexrelid)) AS index_size,
+  pg_stat_get_blocks_fetched(stat.indexrelid) AS blocks_fetched,
+  stat.idx_scan AS index_scans,
+  CASE
+    WHEN stat.idx_scan = 0 THEN NULL
+    ELSE 100 * (1 - pg_stat_get_blocks_fetched(stat.indexrelid)::float / stat.idx_scan)
+  END AS cache_hit_ratio,
+  pg_stat_get_numscans(stat.indexrelid) AS num_scans
+FROM
+  pg_stat_user_indexes AS stat
+JOIN
+  pg_index AS idx ON idx.indexrelid = stat.indexrelid
+WHERE
+  pg_stat_get_blocks_fetched(stat.indexrelid) > 0;
+
+
+-- Additional Index Bloat Check
+SELECT
+  stat.indexrelid::regclass AS index_name,
+  cls.relname AS table_name,
+  nsp.nspname AS schema_name,
+  pg_size_pretty(pg_relation_size(stat.indexrelid)) AS index_size,
+  stat.idx_scan AS index_scans,
+  stat.idx_tup_read AS tuples_read,
+  stat.idx_tup_fetch AS tuples_fetched
+FROM
+  pg_stat_user_indexes AS stat
+JOIN
+  pg_class AS cls ON cls.oid = stat.relid
+JOIN
+  pg_namespace AS nsp ON nsp.oid = cls.relnamespace
+ORDER BY
+  pg_relation_size(stat.indexrelid) DESC;
+
+
+-- Remove bloat by recreating indexes
+    --Find the index names
+SELECT indexrelid::regclass AS index_name
+FROM pg_stat_user_indexes;                 
+
+    -- Remove bloat
+REINDEX INDEX index_name;  -- replace index_name with the your index names
+
+
+-- Clean up dead tuples.
+VACUUM ANALYZE;
