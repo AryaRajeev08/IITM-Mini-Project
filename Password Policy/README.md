@@ -2,7 +2,7 @@
 
 This PostgreSQL script implements a secure user management system with enforced password policies, password expiration, and history tracking. It includes triggers, functions, and automated cron jobs to maintain security standards for stored user credentials.
 
-## Features
+## 🌟 Features
 
 - **Strict Password Policy**: Ensures passwords meet length and complexity requirements.
 - **Password Expiry**: Users must change passwords every 90 days.
@@ -11,12 +11,12 @@ This PostgreSQL script implements a secure user management system with enforced 
 - **Scheduled Expiry Check**: Uses `pg_cron` to automate password expiry checks.
 - **Email Reminder Query**: Identifies users needing password renewal reminders.
 
-## Prerequisites
+## 📋 Prerequisites
 
 - **PostgreSQL** (with `pgcrypto` and `pg_cron` extensions)
 - **Superuser access** to create roles, databases, and extensions
 
-## Setup Instructions
+## ⚙️ Setup Instructions
 
 To set up this system, follow the steps below:
 
@@ -43,7 +43,7 @@ sudo systemctl restart postgresql
 \i path\your_script_file.sql
 ```
 
-## SQL Script Overview
+## 📂  SQL Script Overview
 
 ### Password Policy Enforcement
 
