@@ -56,7 +56,7 @@ cron.database_name = 'postgres'    #your database name
 sudo systemctl restart postgresql
 ```
 >
-### 4️⃣ Run the script
+#### 4️⃣ Run the script
 ```sql
 \i path\your_script_file.sql
 ```
