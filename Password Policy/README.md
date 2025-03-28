@@ -49,22 +49,27 @@ Accounts with expired passwords will be automatically locked by a trigger.
 
 We use `pg_cron` to automate password expiry checks at scheduled intervals.
 
-#### --> Configure `pg_cron` (for Automating Jobs)
+#### Configure `pg_cron` (for Automating Jobs)
 
--> To enable `pg_cron`, ensure the extension is loaded by adding this to postgresql.conf:
+To enable `pg_cron`, ensure the extension is loaded by adding this to postgresql.conf:
 ```bash
 sudo nano /etc/postgresql/15/main/postgresql.conf   # Adjust version accordingly
 ```
--> Add the following lines at the end:
+Add the following lines at the end:
 ```bash
 shared_preload_libraries = 'pg_cron'
-cron.database_name = 'postgres'
+cron.database_name = 'postgres'    #your database name
 ```
--> Restart PostgreSQL to apply changes:
+Restart PostgreSQL to apply changes:
 ```bash
 sudo systemctl restart postgresql
 ```
+## Example SQL for Creating the Required Extensions
 
+```sql
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+```
 
 ### Email Reminder
 
@@ -79,10 +84,3 @@ A query is set up to identify users who need to be reminded to renew their passw
 ![Vulnerable Accounts](https://github.com/user-attachments/assets/f7b7365b-b4ee-4bea-8146-b738a2f8f6d4)
 ### Expired Accounts
 ![Expired Accounts](https://github.com/user-attachments/assets/f5538a92-9222-4841-9553-89d0d367f928)
-
-## Example SQL for Creating the Required Extensions
-
-```sql
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-CREATE EXTENSION IF NOT EXISTS pg_cron;
-```
