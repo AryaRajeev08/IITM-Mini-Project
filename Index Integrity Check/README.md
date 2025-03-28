@@ -121,5 +121,27 @@ We use `pg_cron` to run `check_index_integrity()`.
 
 ## 📸 Screenshots
 
+The table and the index:
+![Index_table](https://github.com/user-attachments/assets/488a78e4-ab6f-494e-bb0e-e12ade49de98)
+
+The corruption displayed:
+![Corruption](https://github.com/user-attachments/assets/e0d2a2df-5a4d-49d6-bdb6-1d21ea573a6c)
+
+The corruption rectified:
+![Corruption_rectified](https://github.com/user-attachments/assets/3eca0dfa-ba9c-41be-a4fa-ef30a72e2f53)
+
+Job scheduled:
+![Job_scheduled](https://github.com/user-attachments/assets/e9cc1e56-54f5-4e58-a2cf-9d5c750a0d5c)
+
+Job schedule preview:
+![Preview_jobschedule](https://github.com/user-attachments/assets/a813f29d-3d9f-44b5-a363-64de6dfa2d2f)
+
+
+
+
+
+
+
+
 
 
