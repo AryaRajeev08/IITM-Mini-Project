@@ -128,9 +128,11 @@ The corruption displayed:
 ![Corruption](https://github.com/user-attachments/assets/e0d2a2df-5a4d-49d6-bdb6-1d21ea573a6c)
 
 The corruption rectified:
+
 ![Corruption_rectified](https://github.com/user-attachments/assets/3eca0dfa-ba9c-41be-a4fa-ef30a72e2f53)
 
 Job scheduled:
+
 ![Job_scheduled](https://github.com/user-attachments/assets/e9cc1e56-54f5-4e58-a2cf-9d5c750a0d5c)
 
 Job schedule preview:
