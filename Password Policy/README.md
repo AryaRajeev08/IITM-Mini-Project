@@ -1,4 +1,4 @@
-# PostgreSQL User Management System
+# 🔐 PostgreSQL User Management System
 
 This PostgreSQL script implements a secure user management system with enforced password policies, password expiration, and history tracking. It includes triggers, functions, and automated cron jobs to maintain security standards for stored user credentials.
 
