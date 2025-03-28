@@ -23,21 +23,22 @@ To set up this system, follow the steps below:
 #### 1️⃣ Install PostgreSQL with `pgcrypto` and `pg_cron` extensions.
 #### 2️⃣ Create the necessary roles, databases, and tables using the provided SQL scripts.
 #### 3️⃣ Configure the cron job for automated password expiry checks.
-##### Configure `pg_cron` (for Automating Jobs)
-
-1. To enable `pg_cron`, ensure the extension is loaded by adding this to postgresql.conf:
+> ##### Configure `pg_cron` (for Automating Jobs)
+>
+>1. To enable `pg_cron`, ensure the extension is loaded by adding this to postgresql.conf:
 ```bash
 sudo nano /etc/postgresql/15/main/postgresql.conf   # Adjust version accordingly
 ```
-2. Add the following lines at the end:
+>2. Add the following lines at the end:
 ```bash
 shared_preload_libraries = 'pg_cron'
 cron.database_name = 'postgres'    #your database name
 ```
-3. Restart PostgreSQL to apply changes:
+>3. Restart PostgreSQL to apply changes:
 ```bash
 sudo systemctl restart postgresql
 ```
+>
 ### 4️⃣ Run the script
 ```sql
 \i path\your_script_file.sql
