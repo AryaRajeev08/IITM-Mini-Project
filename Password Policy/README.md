@@ -51,16 +51,16 @@ We use `pg_cron` to automate password expiry checks at scheduled intervals.
 
 #### Configure `pg_cron` (for Automating Jobs)
 
-To enable `pg_cron`, ensure the extension is loaded by adding this to postgresql.conf:
+1. To enable `pg_cron`, ensure the extension is loaded by adding this to postgresql.conf:
 ```bash
 sudo nano /etc/postgresql/15/main/postgresql.conf   # Adjust version accordingly
 ```
-Add the following lines at the end:
+2. Add the following lines at the end:
 ```bash
 shared_preload_libraries = 'pg_cron'
 cron.database_name = 'postgres'    #your database name
 ```
-Restart PostgreSQL to apply changes:
+3. Restart PostgreSQL to apply changes:
 ```bash
 sudo systemctl restart postgresql
 ```
