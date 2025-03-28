@@ -22,10 +22,6 @@ This PostgreSQL script implements an **automated index integrity management syst
 - Uses `pg_cron` to **run checks daily at midnight**.  
 - Reduces manual intervention for database maintenance.  
 
-### 5️⃣ 📊 **Manual Integrity Verification**  
-- Administrators can **manually run** checks at any time.  
-- View previous corruption logs easily.  
-
 ---
 
 ## 👌 Prerequisites  
