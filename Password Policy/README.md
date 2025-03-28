@@ -48,6 +48,21 @@ Accounts with expired passwords will be automatically locked by a trigger.
 ### Scheduled Expiry Check with `pg_cron`
 
 We use `pg_cron` to automate password expiry checks at scheduled intervals.
+#### Configure pg_cron (for Automating Jobs)
+To enable pg_cron, ensure the extension is loaded by adding this to postgresql.conf:
+```bash
+sudo nano /etc/postgresql/15/main/postgresql.conf   # Adjust version accordingly
+```
+Add the following lines at the end:
+```bash
+shared_preload_libraries = 'pg_cron'
+cron.database_name = 'postgres'
+```
+Restart PostgreSQL to apply changes:
+```bash
+sudo systemctl restart postgresql
+```
+
 
 ### Email Reminder
 
@@ -68,10 +83,4 @@ A query is set up to identify users who need to be reminded to renew their passw
 ```sql
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 CREATE EXTENSION IF NOT EXISTS pg_cron;
-
-
-
-
-
-
-
+```
