@@ -58,3 +58,12 @@ A query is set up to identify users who need to be reminded to renew their passw
 ```sql
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 CREATE EXTENSION IF NOT EXISTS pg_cron;
+
+
+
+## ScreenShots
+![Password Policy Check](Outputs/user_insertion_passwordPolicy_check.png)
+![Password History Check](Outputs/passwordHistoryCheck.png)
+![Vulnerable Accounts](Outputs/VulnerableAcccounts.png)
+![Expired acoounts](Outputs/ExpiredAccBeingLocked.png)
+
