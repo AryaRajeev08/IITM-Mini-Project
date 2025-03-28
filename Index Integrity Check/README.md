@@ -53,7 +53,7 @@ CREATE EXTENSION IF NOT EXISTS pg_cron;  -- Enables scheduling of maintenance jo
 
 > 🔹 **Enable `pg_cron`** by adding this to `postgresql.conf`:  
 ```bash
-sudo nano /etc/postgresql/15/main/postgresql.conf   # Adjust version if needed
+sudo nano /etc/postgresql/14/main/postgresql.conf   # Adjust version if needed
 ```
 > 🔹 Add the following lines at the end:  
 ```bash
