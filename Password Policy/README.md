@@ -20,9 +20,9 @@ This PostgreSQL script implements a secure user management system with enforced 
 
 To set up this system, follow the steps below:
 
-1. Install PostgreSQL with `pgcrypto` and `pg_cron` extensions.
-2. Create the necessary roles, databases, and tables using the provided SQL scripts.
-3. Configure the cron job for automated password expiry checks.
+1️⃣ Install PostgreSQL with `pgcrypto` and `pg_cron` extensions.
+2️⃣ Create the necessary roles, databases, and tables using the provided SQL scripts.
+3️⃣ Configure the cron job for automated password expiry checks.
 #### Configure `pg_cron` (for Automating Jobs)
 
 1. To enable `pg_cron`, ensure the extension is loaded by adding this to postgresql.conf:
@@ -38,7 +38,7 @@ cron.database_name = 'postgres'    #your database name
 ```bash
 sudo systemctl restart postgresql
 ```
-4. Run the script
+4️⃣  Run the script
 ```sql
 \i path\your_script_file.sql
 ```
