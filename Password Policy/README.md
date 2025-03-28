@@ -53,6 +53,15 @@ We use `pg_cron` to automate password expiry checks at scheduled intervals.
 
 A query is set up to identify users who need to be reminded to renew their passwords, and email notifications are sent out accordingly.
 
+## Screen Shots
+![Password Policy Check](https://github.com/user-attachments/assets/ecaa260b-4e64-44de-a8d7-966393f35434)
+
+![Password History Check](https://github.com/user-attachments/assets/f266e77f-976b-44df-926e-b88b69c52efa)
+
+![Vulnerable Accounts](https://github.com/user-attachments/assets/f7b7365b-b4ee-4bea-8146-b738a2f8f6d4)
+
+![Expired Accounts](https://github.com/user-attachments/assets/f5538a92-9222-4841-9553-89d0d367f928)
+
 ## Example SQL for Creating the Required Extensions
 
 ```sql
@@ -62,12 +71,6 @@ CREATE EXTENSION IF NOT EXISTS pg_cron;
 
 
 
-![Password Policy Check](https://github.com/user-attachments/assets/ecaa260b-4e64-44de-a8d7-966393f35434)
 
-![Password History Check](https://github.com/user-attachments/assets/f266e77f-976b-44df-926e-b88b69c52efa)
-
-![Vulnerable Accounts](https://github.com/user-attachments/assets/f7b7365b-b4ee-4bea-8146-b738a2f8f6d4)
-
-![Expired Accounts](https://github.com/user-attachments/assets/f5538a92-9222-4841-9553-89d0d367f928)
 
 
