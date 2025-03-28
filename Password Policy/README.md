@@ -4,12 +4,29 @@ This PostgreSQL script implements a secure user management system with enforced 
 
 ## 🌟 Features
 
-- **Strict Password Policy**: Ensures passwords meet length and complexity requirements.
-- **Password Expiry**: Users must change passwords every 90 days.
-- **Password History Check**: Prevents reuse of the last 3 passwords.
-- **Automatic Expiry Lock**: Locks accounts with expired passwords.
-- **Scheduled Expiry Check**: Uses `pg_cron` to automate password expiry checks.
-- **Email Reminder Query**: Identifies users needing password renewal reminders.
+### 1. 🔑 User Authentication
+- Secure user creation with encrypted passwords
+- Mandatory strong password requirements
+- Automatic password hashing using bcrypt
+
+### 2. 🛡️ Password Policy Enforcement
+The script enforces strict password complexity rules:
+- Minimum length of 12 characters
+- Requires at least:
+  - One uppercase letter
+  - One lowercase letter
+  - One number
+  - One special character (`!@#$%^&*()`)
+
+### 3. 🔄 Password History and Rotation
+- Prevents password reuse (last 3 passwords)
+- Automatic 90-day password expiration
+- Prevents repeated password submissions
+
+### 4. 🚨 Account Security
+- Automatic account locking for expired passwords
+- Password expiry tracking
+- Scheduled password expiration checks
 
 ## 📋 Prerequisites
 
@@ -44,42 +61,30 @@ sudo systemctl restart postgresql
 \i path\your_script_file.sql
 ```
 
-## 📂  SQL Script Overview
+## 📊 Database Schema
 
-### Password Policy Enforcement
+### 📝 Tables
+- `users`: Stores user account information
+- `password_history`: Tracks password change history
 
-The script ensures that:
-
-- Password length is at least 12 characters.
-- Password contains at least one uppercase letter, one lowercase letter, one number, and one special character.
-
-### Password Expiry
-
-Users will be required to change their passwords every 90 days. Once expired, their accounts will be locked until the password is updated.
-
-### Password History Check
-
-The system tracks the last 3 passwords and prevents users from reusing them.
-
-### Automated Expiry Lock
-
-Accounts with expired passwords will be automatically locked by a trigger.
-
-### Scheduled Expiry Check with `pg_cron`
-
-We use `pg_cron` to automate password expiry checks at scheduled intervals.
+### 🧩 Functions
+- `enforce_password_policy()`: Validates and hashes passwords
+- `check_password_expiry()`: Manages password rotation and history
+- `expire_old_passwords()`: Locks accounts with expired passwords
 
 
-## Example SQL for Creating the Required Extensions
+## 🛡️ Security Recommendations
 
-```sql
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-CREATE EXTENSION IF NOT EXISTS pg_cron;
-```
+- Regularly update PostgreSQL and extensions
+- Use strong, unique passwords
+- Monitor account activities
 
-### Email Reminder
+## 🔧 Customization
 
-A query is set up to identify users who need to be reminded to renew their passwords, and email notifications are sent out accordingly.
+You can modify the following parameters:
+- Password complexity requirements
+- Password expiration interval (currently 90 days)
+- Number of previous passwords to block (currently 3)
 
 ## Screen Shots
 ### Password Policy Check
@@ -90,3 +95,11 @@ A query is set up to identify users who need to be reminded to renew their passw
 ![Vulnerable Accounts](https://github.com/user-attachments/assets/f7b7365b-b4ee-4bea-8146-b738a2f8f6d4)
 ### Expired Accounts
 ![Expired Accounts](https://github.com/user-attachments/assets/f5538a92-9222-4841-9553-89d0d367f928)
+
+
+## Example SQL for Creating the Required Extensions
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+```
