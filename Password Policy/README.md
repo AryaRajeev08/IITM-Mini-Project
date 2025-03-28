@@ -61,7 +61,7 @@ CREATE EXTENSION IF NOT EXISTS pg_cron;
 
 
 
-## ScreenShots
+
 ![Password Policy Check](https://github.com/user-attachments/assets/ecaa260b-4e64-44de-a8d7-966393f35434)
 
 ![Password History Check](https://github.com/user-attachments/assets/f266e77f-976b-44df-926e-b88b69c52efa)
