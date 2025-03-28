@@ -1,4 +1,4 @@
--- Step 1: Create User
+-- Create User
 CREATE USER admin WITH ENCRYPTED PASSWORD '123';
 GRANT ALL PRIVILEGES ON DATABASE postgres TO admin;
 
