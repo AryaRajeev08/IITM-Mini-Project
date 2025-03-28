@@ -86,7 +86,7 @@ You can modify the following parameters:
 - Password expiration interval (currently 90 days)
 - Number of previous passwords to block (currently 3)
 
-## Screen Shots
+## 📸 Screen Shots
 ### Password Policy Check
 ![Password Policy Check](https://github.com/user-attachments/assets/ecaa260b-4e64-44de-a8d7-966393f35434)
 ### Password History Check
