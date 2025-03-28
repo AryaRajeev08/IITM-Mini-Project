@@ -22,7 +22,6 @@ This feature ensures the integrity of database indexes by automating corruption 
 - **Corruption Logging:** Stores details of corrupted indexes, including timestamps and affected table names.
 - **Self-Healing Mechanism:** Automatically rebuilds corrupted indexes to restore database integrity.
 - **Scheduled Maintenance:** Runs integrity checks at predefined intervals to minimize manual intervention.
-- **Manual Verification:** Allows administrators to manually initiate checks when required.
 
 ### 3️⃣ PostgreSQL Monitoring with Prometheus - Health Collector & Alerts
 This module provides real-time monitoring and alerting for PostgreSQL databases. It collects performance metrics, exposes them to Prometheus, and triggers alerts based on predefined thresholds.
