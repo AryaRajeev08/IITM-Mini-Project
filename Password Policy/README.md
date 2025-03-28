@@ -62,8 +62,12 @@ CREATE EXTENSION IF NOT EXISTS pg_cron;
 
 
 ## ScreenShots
-![Password Policy Check](https://github.com/AryaRajeev08/IITM-Mini-Project/blob/main/Password%20Policy/Outputs/user_insertion_passwordPolicy_check.png)
-![Password History Check](https://github.com/AryaRajeev08/IITM-Mini-Project/blob/main/Password%20Policy/Outputs/passwordHistoryCheck.png)
-![Vulnerable Accounts](https://github.com/AryaRajeev08/IITM-Mini-Project/blob/main/Password%20Policy/Outputs/VulnerableAccounts.png)
-![Expired acoounts](https://github.com/AryaRajeev08/IITM-Mini-Project/blob/main/Password%20Policy/Outputs/ExpiredAccBeingLocked.png)
+![Password Policy Check](https://raw.githubusercontent.com/AryaRajeev08/IITM-Mini-Project/main/Password%20Policy/Outputs/user_insertion_passwordPolicy_check.png)
+
+![Password History Check](https://raw.githubusercontent.com/AryaRajeev08/IITM-Mini-Project/main/Password%20Policy/Outputs/passwordHistoryCheck.png)
+
+![Vulnerable Accounts](https://raw.githubusercontent.com/AryaRajeev08/IITM-Mini-Project/main/Password%20Policy/Outputs/VulnerableAccounts.png)
+
+![Expired Accounts](https://raw.githubusercontent.com/AryaRajeev08/IITM-Mini-Project/main/Password%20Policy/Outputs/ExpiredAccBeingLocked.png)
+
 
