@@ -54,7 +54,7 @@ sudo nano /etc/postgresql/14/main/postgresql.conf   # Adjust version if needed
 > 🔹 Add the following lines at the end:  
 ```bash
 shared_preload_libraries = 'pg_cron'
-cron.database_name = 'index_checker'  # Set to your database name
+cron.database_name = 'world'  # Set to your database name
 ```
 > 🔹 Restart PostgreSQL to apply changes:  
 ```bash
