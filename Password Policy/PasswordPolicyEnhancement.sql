@@ -116,8 +116,3 @@ END;
 $$ LANGUAGE plpgsql;
 
 SELECT cron.schedule('0 0 * * *', 'SELECT expire_old_passwords();');
-
--- Get Users Close to Password Expiry
-SELECT email FROM users WHERE password_expiry - INTERVAL '5 days' < now();
-
-
