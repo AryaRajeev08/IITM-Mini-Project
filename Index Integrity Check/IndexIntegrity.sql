@@ -72,7 +72,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
--- Step 5: Schedule the cron job to run daily at 2 AM
+-- Step 5: Schedule the cron job to run daily at midnight
 SELECT cron.schedule(
     'reindex_all_tables_daily',
     '0 0 * * *',
