@@ -1,74 +1,86 @@
---Step 1: Create Database
+-- Step 1: Enable pg_cron extension
+CREATE EXTENSION IF NOT EXISTS pg_cron;
 
-CREATE DATABASE index_checker;
 
---Step 2: Create required extensions
-
-CREATE EXTENSION amcheck;
-CREATE EXTENSION pg_cron;
-
---Step 3: Create a corruption log table
- 
-CREATE TABLE corruption_logs (
+-- Step 2: Create corruption log table (if not exists)
+CREATE TABLE IF NOT EXISTS corruption_log (
     id SERIAL PRIMARY KEY,
-    index_name TEXT NOT NULL,
     table_name TEXT NOT NULL,
-    detected_at TIMESTAMP DEFAULT now()
+    index_name TEXT NOT NULL,
+    issue_description TEXT NOT NULL,
+    detected_at TIMESTAMP DEFAULT NOW(),
+    status TEXT NOT NULL
 );
 
 
---Step 4: Create a function to check and fix the indexes
-
-CREATE OR REPLACE FUNCTION check_index_integrity()
-RETURNS void AS $$
+-- Step 3: Function to check and reindex a given table
+CREATE OR REPLACE FUNCTION check_and_reindex(table_name TEXT) RETURNS VOID AS $$
 DECLARE
-    rec RECORD;
-    corruption_found BOOLEAN := FALSE;
+    index_record RECORD;
 BEGIN
-    FOR rec IN 
-        SELECT indexrelid::regclass AS index_name, indrelid::regclass AS table_name
+    -- Check for corrupt indexes using amcheck
+    FOR index_record IN
+        SELECT indexrelid::regclass::text AS index_name
         FROM pg_index
+        WHERE indrelid = table_name::regclass
     LOOP
         BEGIN
-            -- Check index integrity
-            PERFORM bt_index_check(rec.index_name);
+            EXECUTE format('SELECT bt_index_check(%I)', index_record.index_name);
         EXCEPTION
             WHEN OTHERS THEN
-                corruption_found := TRUE;
-                RAISE NOTICE 'Corruption found in index: %, Table: %', rec.index_name, rec.table_name;
+                INSERT INTO corruption_log (table_name, index_name, issue_description, status)
+                VALUES (table_name, index_record.index_name, 'Corruption detected during amcheck', 'Pending');
 
-                -- Log corruption
-                INSERT INTO corruption_logs (index_name, table_name, detected_at)
-                VALUES (rec.index_name, rec.table_name, now());
+                -- Attempt reindex
+                BEGIN
+                    EXECUTE format('REINDEX INDEX CONCURRENTLY %I', index_record.index_name);
 
-                -- Fix corruption by reindexing
-                EXECUTE format('REINDEX INDEX %I', rec.index_name);
+                    -- Update log status after reindexing
+                    UPDATE corruption_log
+                    SET status = 'Reindexed'
+                    WHERE table_name = table_name
+                      AND index_name = index_record.index_name
+                      AND status = 'Pending';
+                EXCEPTION
+                    WHEN OTHERS THEN
+                        -- If reindexing fails, mark as Failed
+                        UPDATE corruption_log
+                        SET status = 'Reindex Failed'
+                        WHERE table_name = table_name
+                          AND index_name = index_record.index_name
+                          AND status = 'Pending';
+                END;
         END;
     END LOOP;
-    
-    IF NOT corruption_found THEN
-        RAISE NOTICE 'No index corruption found.';
-    END IF;
 END;
 $$ LANGUAGE plpgsql;
 
 
+-- Step 4: Wrapper function to check and reindex all tables in the public schema
+CREATE OR REPLACE FUNCTION check_and_reindex_all_tables() RETURNS VOID AS $$
+DECLARE
+    tbl RECORD;
+BEGIN
+    FOR tbl IN
+        SELECT tablename
+        FROM pg_tables
+        WHERE schemaname = 'public'
+    LOOP
+        PERFORM check_and_reindex(tbl.tablename);
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
 
---Step 5: View the corrupted indexes if any
 
-SELECT * FROM corruption_logs ORDER BY detected_at DESC;
-
-
---Step 6: Schedule Automatic check
-
+-- Step 5: Schedule the cron job to run daily at 2 AM
 SELECT cron.schedule(
-    'index_check_job',
-    '0 0 * * *', -- Runs daily at midnight
-    $$CALL check_index_integrity()$$
+    'reindex_all_tables_daily',
+    '0 2 * * *',
+    $$ SELECT check_and_reindex_all_tables(); $$
 );
 
 
---Step 7: View the scheduled job
+-- Step 6: View the scheduled job
 SELECT * FROM cron.job;
 
 
