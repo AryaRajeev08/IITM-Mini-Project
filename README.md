@@ -13,6 +13,7 @@ This module implements a secure user management system with enforced password po
 - **Password Policy Enforcement:** Enforces minimum length, uppercase, lowercase, numeric, and special character requirements.
 - **Password History and Rotation:** Blocks reuse of previous passwords and ensures automatic expiration.
 - **Account Security:** Automatically locks accounts with expired passwords and tracks password expiry.
+- **Email Notifications:** Automated email alerts for upcoming password expirations.
 
 ### 2️⃣ PostgreSQL Index Integrity Check System
 This feature ensures the integrity of database indexes by automating corruption checks, logging issues, and rebuilding corrupted indexes when necessary.
