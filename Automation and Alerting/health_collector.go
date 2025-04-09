@@ -57,7 +57,7 @@ func (c *PostgresMetricsCollector) Collect(ch chan<- prometheus.Metric) {
 	defer c.mutex.Unlock()
 
 	// --- Fetch PostgreSQL CPU Usage ---
-	out, err := exec.Command("sh", "-c", "ps -eo pid,comm,%cpu --sort=-%cpu | grep postgres | head -n 1 | awk '{print $3}'").Output()
+	out, err := exec.Command("sh", "-c", "ps -C postgres -o %cpu= | awk '{s+=$1} END {print s}'").Output()
 	if err != nil {
 		log.Printf("Error fetching PostgreSQL CPU usage: %v", err)
 		return
@@ -110,10 +110,10 @@ func (c *PostgresMetricsCollector) Collect(ch chan<- prometheus.Metric) {
 		slowestQueryTime = -1 // Indicate error
 	}
 
-	c.SlowQueryTime.Set(slowestQueryTime)
+	c.SlowQueryTime.Set(slowestQueryTime / 1000.0)
 	ch <- c.SlowQueryTime
 
-	if slowestQueryTime > 3.0 { // Threshold for slow queries (3 seconds)
-		log.Printf("ALERT: Slow query detected! Max execution time: %.2f seconds", slowestQueryTime)
+	if slowestQueryTime/1000.0 > 3.0 { // Threshold for slow queries (3 seconds)
+		log.Printf("ALERT: Slow query detected! Max execution time: %.2f seconds", slowestQueryTime/1000.0)
 	}
 }
