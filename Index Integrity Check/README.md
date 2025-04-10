@@ -117,25 +117,28 @@ We use `pg_cron` to run `check_index_integrity()`.
 
 ## 📸 Screenshots
 
-1. The table and the index:
-   
-![Index_table](https://github.com/user-attachments/assets/488a78e4-ab6f-494e-bb0e-e12ade49de98)
+1. The index:
+
+![indexname](https://github.com/user-attachments/assets/f0fa4fcb-58bf-4f69-a2ed-ccc86feefc45)
 
 2. The corruption displayed:
    
-![Corruption](https://github.com/user-attachments/assets/e0d2a2df-5a4d-49d6-bdb6-1d21ea573a6c)
+![corrupted](https://github.com/user-attachments/assets/f5ab18ee-1fb2-4d4c-8904-25bc38246b9f)
+  
+3. The exexution time:
 
-3. The corruption rectified:
+![exec_time](https://github.com/user-attachments/assets/64bad48c-4c45-4318-b442-d76f1c4f249f)
 
-![Corruption_rectified](https://github.com/user-attachments/assets/3eca0dfa-ba9c-41be-a4fa-ef30a72e2f53)
 
-4. Job scheduled:
+4. Index size:
 
-![Job_scheduled](https://github.com/user-attachments/assets/e9cc1e56-54f5-4e58-a2cf-9d5c750a0d5c)
+![indexsize](https://github.com/user-attachments/assets/13bc52ef-dec6-443f-8767-b2297c80f654)
 
-5. Job schedule preview:
+
+5. Job scheduled:
  
-![Preview_jobschedule](https://github.com/user-attachments/assets/a813f29d-3d9f-44b5-a363-64de6dfa2d2f)
+![job](https://github.com/user-attachments/assets/7a92b239-b57b-49cb-a068-66ff3580b685)
+
 
 
 
