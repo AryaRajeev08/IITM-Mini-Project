@@ -1,40 +1,40 @@
-# 🛠️ PostgreSQL Index Integrity Check System  
+# PostgreSQL Index Integrity Check System  
 
 This PostgreSQL script implements an **automated index integrity management system** with scheduled checks, logging, and self-healing mechanisms. It ensures database indexes remain **consistent and corruption-free** using `amcheck` for verification and `pg_cron` for automated scheduling.  
 
 ---
 
-## 🌟 Features  
+## Features  
 
-### 1️⃣ 🏢 **Automated Index Integrity Checks**  
+### 1️⃣ **Automated Index Integrity Checks**  
 - Periodically scans **all indexes** for corruption.  
 - Uses `bt_index_check()` to verify index consistency.  
 
-### 2️⃣ 📝 **Corruption Logging**  
+### 2️⃣ **Corruption Logging**  
 - Stores **corrupted index details** in a dedicated table.  
 - Includes timestamp and affected table name.  
 
-### 3️⃣ 🔄 **Self-Healing Mechanism**  
+### 3️⃣ **Self-Healing Mechanism**  
 - Automatically **rebuilds** corrupted indexes.  
 - Uses `REINDEX INDEX` to restore integrity.  
 
-### 4️⃣ 🕒 **Scheduled Maintenance**  
+### 4️⃣ **Scheduled Maintenance**  
 - Uses `pg_cron` to **run checks daily at midnight**.  
 - Reduces manual intervention for database maintenance.  
 
 ---
 
-## 👌 Prerequisites  
+## Prerequisites  
 
 Before using this system, ensure the following requirements are met:  
 
-👉 **PostgreSQL 12+** (or higher)  
+👉**PostgreSQL 12+** (or higher)  
 👉 Installed Extensions: `amcheck` (for index integrity checks), `pg_cron` (for scheduling jobs)  
 👉 **Superuser Privileges** (to create extensions & schedule jobs)  
 
 ---
 
-## ⚙️ Setup Instructions  
+## ⚙Setup Instructions  
 
 ### **1️⃣ Install Required Extensions**  
 
@@ -71,9 +71,9 @@ sudo systemctl restart postgresql
 
 ---
 
-## 📊 Database Schema  
+## Database Schema  
 
-### 📝 **Tables**  
+### **Tables**  
 
 | Table Name         | Description |
 |--------------------|-------------|
@@ -82,9 +82,9 @@ sudo systemctl restart postgresql
 
 ---
 
-### 🧙️ **Functions**  
+### **Functions**  
 
-#### ✅ `check_index_integrity()`
+#### `check_index_integrity()`
 - Scans all indexes in the database.  
 - Detects corruption using `bt_index_check()`.  
 - Logs corrupted indexes in `corruption_logs`.  
@@ -93,7 +93,7 @@ sudo systemctl restart postgresql
 
 ---
 
-### 🕒 **4️⃣ Schedule Automatic Index Integrity Checks**  
+### **4️⃣ Schedule Automatic Index Integrity Checks**  
 
 We use `pg_cron` to run `check_index_integrity()`.
 
@@ -101,12 +101,12 @@ We use `pg_cron` to run `check_index_integrity()`.
 
 ## 🔍 **Usage**  
 
-### ✅ **Manually Check for Corrupted Indexes**  
-### ✅ **View Scheduled Jobs**  
+### **Manually Check for Corrupted Indexes**  
+### **View Scheduled Jobs**  
 
 ---
 
-## 🛡️ **Best Practices & Security Recommendations**  
+## **Best Practices & Security Recommendations**  
 
 📌 Regularly **monitor `corruption_logs`** to identify persistent issues.  
 📌 Keep PostgreSQL and extensions **up to date** for better performance.  
