@@ -87,4 +87,3 @@ SELECT cron.schedule(
 
 -- Step 6: View the scheduled job
 SELECT * FROM cron.job;
-
