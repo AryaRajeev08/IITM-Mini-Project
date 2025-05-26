@@ -1,4 +1,4 @@
--- AROMAL AJ
+-- Contributed by AROMAL AJ
 
 -- Create User
 CREATE USER admin WITH ENCRYPTED PASSWORD '123';
