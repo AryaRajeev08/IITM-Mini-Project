@@ -1,3 +1,5 @@
+-- Contributed by ANNA TOMSON
+
 -- create database and user for prometheus
 CREATE DATABASE testdb;
 CREATE USER prometheus WITH ENCRYPTED PASSWORD 'password';
