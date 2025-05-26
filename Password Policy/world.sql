@@ -1,5 +1,3 @@
--- Contributed by AROMAL AJ
-
 
 -- PostgreSQL port of the MySQL "World" database.
 --
