@@ -1,3 +1,6 @@
+// Contributed by ALAN MATHEW VARGHESE
+
+
 // I have added lines 81 to 106, the rest is the source code(main.go) of prostgres_exporter
 
 
