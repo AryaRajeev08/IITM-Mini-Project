@@ -1,3 +1,5 @@
+#Contributed by ARYA RAJEEV
+
 #!/bin/bash
 
 # Set variables
